@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf8">
+  <title><%= "#{@title} | #{SITE_TITLE}" %></title>
+</head>
+<body>
+  <h1><a href="/"><%= SITE_TITLE %></a></h1>
+  <h2><%= SITE_DESCRIPTION %></h2>
+  <%= yield %>
+
+</body>
+</html>
