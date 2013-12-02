@@ -1,0 +1,8 @@
+Playing at 1 to <%= "#{@game.odds.to_s('F')}" %> odds.
+Your stake is <%= "$#{@game.stake.to_s('F')}" %>.
+
+<form action="/<%= "#{@game.id}" %>" method="post">
+  <input type="hidden" name="_method" value="put">
+  Your wager?<input type="text" name="wager">
+  <input type="submit" name="Roll dem funky dice!">
+</form>
