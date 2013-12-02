@@ -1,4 +1,17 @@
 <form action="/" method="post">
   <input type="text" name="stake" placeholder="Starting stake">
+  <input type="text" name="odds" placeholder="1 to ?">
   <input type="submit" value="Let's Play!">
 </form>
+
+<% @games.each do |game| %>
+  <div <%= 'class="lost"' if game.lost_game %> >
+    <p> Remaining stake is <%= "#{game.stake}" %>.
+    Playing at 1 to <%= "#{game.odds}" %> odds.
+    Game started <%= "#{game.started}" %>.
+    <% if game.started != game.last_played %>
+      Last played <%= "#{game.last_played}" %>.
+    <% end %>
+  </p>
+  </div>
+<% end %>

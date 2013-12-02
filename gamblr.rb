@@ -9,18 +9,27 @@ SITE_DESCRIPTION = "Money is icky!"
 
 class Gambling
   include DataMapper::Resource
-  property :id,         Serial
-  property :stake,      Decimal
-  property :odds,       Decimal
-  property :payout,     Decimal
-  property :started,    DateTime
-  property :last_play,  DateTime
+  property :id,           Serial
+  property :stake,        Decimal, :required => true
+  property :odds,         Decimal, :required => true
+  property :lost_game,    Boolean, :required => true, :default => false
+  property :started,      DateTime
+  property :last_played,  DateTime
 end
 
 DataMapper.finalize.auto_upgrade!
 
 get '/' do
-  @game = Gambling.all :order => :id.desc
+  @games = Gambling.all :order => :id.desc
   @title = "Welcome"
   erb :home
+end
+
+post '/' do
+  g = Gambling.new params[:id]
+  g.stake = params[:stake]
+  g.odds  = params[:odds]
+  g.started     = Time.now
+  g.last_played = Time.now
+  redirect '/'
 end
