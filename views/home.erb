@@ -6,15 +6,19 @@
 
 <% @games.each do |game| %>
   <div <%= 'class="lost"' if game.lost_game %> >
-    Stake is <%= "$#{game.stake.to_s('F')}" %>.
-    Playing at 1 to <%= "#{game.odds.to_s('F')}" %> odds.
+    Stake is <%= "$#{game.stake}" %>.
+    Playing at 1 to <%= "#{game.odds}" %> odds.
     <% if game.wager != 0 %>
-      Last wager was <% "#{game.wager}" %>
+      Last wager was <%= "$#{game.wager}" %>
     <% end %>
-    Game started <%= "#{game.started}" %>.
+    Game started <%= "#{game.started.strftime("%m/%d/%Y at %I:%M%p")}" %>.
     <% if game.started != game.last_played %>
-      Last played <%= "#{game.last_played}" %>.
+      Last played <%= "#{game.last_played.strftime("%m/%d/%Y at %I:%M%p")}" %>.
     <% end %>
-    <a href="/<%= game.id %>">Gamblin' time</a>
+    <% if game.lost_game == false %>
+      <a href="/<%= game.id %>">Gamblin' time</a>
+    <% else %>
+      (Lost)
+    <% end %>
   </div>
 <% end %>

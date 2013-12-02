@@ -10,9 +10,9 @@ SITE_DESCRIPTION = "Money is icky!"
 class Gambling
   include DataMapper::Resource
   property :id,           Serial
-  property :stake,        Decimal, :required => true
-  property :odds,         Decimal, :required => true
-  property :wager,        Decimal, :required => true, :default => 0
+  property :stake,        Float, :required => true
+  property :odds,         Float, :required => true
+  property :wager,        Float, :required => true, :default => 0
   property :lost_game,    Boolean, :required => true, :default => false
   property :started,      DateTime
   property :last_played,  DateTime
@@ -45,10 +45,11 @@ end
 put '/:id' do
   g = Gambling.get params[:id]
   g.wager = params[:wager]
-  # g.stake = params[:stake].to_f
+  g.wager = g.stake / g.odds if g.wager * g.odds > g.stake
   pot = g.wager * g.odds
   roll = rand(g.odds)
   roll == 0 ? g.stake += pot : g.stake -= pot
+  g.lost_game = true if g.stake <= 0
   g.last_played = Time.now
   g.save
   redirect '/'
