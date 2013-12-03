@@ -28,8 +28,8 @@ end
 
 post '/' do
   g = Gambling.new params[:id]
-  g.stake = params[:stake]
-  g.odds  = params[:odds]
+  g.stake = params[:stake].to_f.round(2)
+  g.odds  = params[:odds].to_f.round(2)
   g.started     = Time.now
   g.last_played = Time.now
   g.save

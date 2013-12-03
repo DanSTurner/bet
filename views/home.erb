@@ -9,7 +9,7 @@
     Stake is <%= "$#{game.stake}" %>.
     Playing at 1 to <%= "#{game.odds}" %> odds.
     <% if game.wager != 0 %>
-      Last wager was <%= "$#{game.wager}" %>
+      Last wager was <%= "$#{game.wager.round(2)}" %>
     <% end %>
     Game started <%= "#{game.started.strftime("%m/%d/%Y at %I:%M%p")}" %>.
     <% if game.started != game.last_played %>
